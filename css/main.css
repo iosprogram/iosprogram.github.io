@@ -1814,7 +1814,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff6347;
+  background: #ff5367;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2614,7 +2614,7 @@ hr {
   background: url("http://osntkgpoj.bkt.clouddn.com/stock-photo-86061397.jpg");
 }
 .header-inner {
-  padding: 25px 0 20px;
+  padding: 35px 0 30px;
 }
 .header-inner:before,
 .header-inner:after {
