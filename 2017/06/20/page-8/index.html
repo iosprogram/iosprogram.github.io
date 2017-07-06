@@ -1,0 +1,823 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS Fastlane+Fir," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="更新Ruby1sudo gem update --system 查看Ruby版本1Ruby -v 用Ruby China替换Ruby的默认源,替换命令如下:12345gem sources --remove https://rubygems.org///等有反应之后再敲入以下命令gem sources -a https://gems.ruby-china.org///验证是否替换成功可以执行ge">
+<meta name="keywords" content="iOS Fastlane+Fir">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fastlane+Fir iOS自动化构建工具">
+<meta property="og:url" content="http://yoursite.com/2017/06/20/page-8/index.html">
+<meta property="og:site_name" content="奥创的博客">
+<meta property="og:description" content="更新Ruby1sudo gem update --system 查看Ruby版本1Ruby -v 用Ruby China替换Ruby的默认源,替换命令如下:12345gem sources --remove https://rubygems.org///等有反应之后再敲入以下命令gem sources -a https://gems.ruby-china.org///验证是否替换成功可以执行ge">
+<meta property="og:image" content="http://yoursite.com/uploads/images/titleforest/diary-20.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/images/RubyChina.png">
+<meta property="og:updated_time" content="2017-07-06T06:40:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fastlane+Fir iOS自动化构建工具">
+<meta name="twitter:description" content="更新Ruby1sudo gem update --system 查看Ruby版本1Ruby -v 用Ruby China替换Ruby的默认源,替换命令如下:12345gem sources --remove https://rubygems.org///等有反应之后再敲入以下命令gem sources -a https://gems.ruby-china.org///验证是否替换成功可以执行ge">
+<meta name="twitter:image" content="http://yoursite.com/uploads/images/titleforest/diary-20.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/20/page-8/"/>
+
+
+
+
+
+  <title>Fastlane+Fir iOS自动化构建工具 | 奥创的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">奥创的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/20/page-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="那仅有的执着">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奥创的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fastlane+Fir iOS自动化构建工具</h1>
+        
+
+        <div class="post-meta">
+        
+  <span id="busuanzi_container_page_pv">  |  阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-20T14:45:48+08:00">
+                Jun 20 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/Fastlane-Fir/" itemprop="url" rel="index">
+                    <span itemprop="name">Fastlane+Fir</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/20/page-8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/uploads/images/titleforest/diary-20.jpg" alt="笔记"></p>
+<h4 id="更新Ruby"><a href="#更新Ruby" class="headerlink" title="更新Ruby"></a>更新Ruby</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gem update --system</div></pre></td></tr></table></figure>
+<h4 id="查看Ruby版本"><a href="#查看Ruby版本" class="headerlink" title="查看Ruby版本"></a>查看Ruby版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ruby -v</div></pre></td></tr></table></figure>
+<h4 id="用Ruby-China替换Ruby的默认源-替换命令如下"><a href="#用Ruby-China替换Ruby的默认源-替换命令如下" class="headerlink" title="用Ruby China替换Ruby的默认源,替换命令如下:"></a>用Ruby China替换Ruby的默认源,替换命令如下:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">gem sources --remove https://rubygems.org/</div><div class="line">//等有反应之后再敲入以下命令</div><div class="line">gem sources -a https://gems.ruby-china.org/</div><div class="line">//验证是否替换成功可以执行</div><div class="line">gem sources -l</div></pre></td></tr></table></figure>
+<p><img src="/uploads/images/RubyChina.png" alt="笔记"></p>
+<h4 id="Fastlane安装"><a href="#Fastlane安装" class="headerlink" title="Fastlane安装:"></a>Fastlane安装:</h4><h6 id="系统要求-macOS或-Linux-使用-Ruby-2-0-0及以上版本-终端执行："><a href="#系统要求-macOS或-Linux-使用-Ruby-2-0-0及以上版本-终端执行：" class="headerlink" title="系统要求:macOS或 Linux 使用 Ruby 2.0.0及以上版本 终端执行："></a>系统要求:macOS或 Linux 使用 Ruby 2.0.0及以上版本 终端执行：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gem install fastlane --verbose</div></pre></td></tr></table></figure>
+<h6 id="确保Xcode安装了最新版本的命令行工具"><a href="#确保Xcode安装了最新版本的命令行工具" class="headerlink" title="确保Xcode安装了最新版本的命令行工具"></a>确保Xcode安装了最新版本的命令行工具</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xcode-select --install</div></pre></td></tr></table></figure>
+<h6 id="到此安装完成"><a href="#到此安装完成" class="headerlink" title="到此安装完成"></a>到此安装完成</h6><h4 id="Fastlane快速使用"><a href="#Fastlane快速使用" class="headerlink" title="Fastlane快速使用:"></a>Fastlane快速使用:</h4><h6 id="进入要使用fastlane的项目根目录"><a href="#进入要使用fastlane的项目根目录" class="headerlink" title="进入要使用fastlane的项目根目录"></a>进入要使用fastlane的项目根目录</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd 你的项目根目录</div></pre></td></tr></table></figure>
+<h6 id="初始化fastlane-在项目根目录下生成fastlane文件-包含Appfile和Fastfile配置文件"><a href="#初始化fastlane-在项目根目录下生成fastlane文件-包含Appfile和Fastfile配置文件" class="headerlink" title="初始化fastlane,在项目根目录下生成fastlane文件, 包含Appfile和Fastfile配置文件"></a>初始化fastlane,在项目根目录下生成fastlane文件, 包含Appfile和Fastfile配置文件</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fastlane init</div></pre></td></tr></table></figure>
+<h6 id="根据提示-配置你的app"><a href="#根据提示-配置你的app" class="headerlink" title="根据提示,配置你的app"></a>根据提示,配置你的app</h6><h6 id="这里需要配置apple-id-项目唯一标识等"><a href="#这里需要配置apple-id-项目唯一标识等" class="headerlink" title="这里需要配置apple id 项目唯一标识等"></a>这里需要配置apple id 项目唯一标识等</h6><h6 id="此时你的项目中已经集成了fastlane"><a href="#此时你的项目中已经集成了fastlane" class="headerlink" title="此时你的项目中已经集成了fastlane"></a>此时你的项目中已经集成了fastlane</h6><h4 id="生成脚本"><a href="#生成脚本" class="headerlink" title="生成脚本:"></a>生成脚本:</h4><h6 id="进入项目路径下"><a href="#进入项目路径下" class="headerlink" title="进入项目路径下"></a>进入项目路径下</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd 你的项目根目录</div></pre></td></tr></table></figure>
+<h6 id="创建并编写脚本"><a href="#创建并编写脚本" class="headerlink" title="创建并编写脚本"></a>创建并编写脚本</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim build_using_gym.sh</div></pre></td></tr></table></figure>
+<h6 id="复制如下代码到build-using-gym-sh文件中-修改项目名称后保存"><a href="#复制如下代码到build-using-gym-sh文件中-修改项目名称后保存" class="headerlink" title="复制如下代码到build_using_gym.sh文件中,修改项目名称后保存"></a>复制如下代码到build_using_gym.sh文件中,修改项目名称后保存</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line">#计时</div><div class="line">SECONDS=0</div><div class="line"></div><div class="line">#假设脚本放置在与项目相同的路径下</div><div class="line">project_path=$(pwd)</div><div class="line">#取当前时间字符串添加到文件结尾</div><div class="line">now=$(date +&quot;%Y_%m_%d_%H_%M_%S&quot;)</div><div class="line"></div><div class="line">#指定项目的scheme名称</div><div class="line">scheme=&quot;项目名称&quot;</div><div class="line">#指定要打包的配置名</div><div class="line">configuration=&quot;Adhoc&quot;</div><div class="line">#指定打包所使用的输出方式，目前支持app-store, package, ad-hoc, enterprise, development, 和developer-id，即xcodebuild的method参数</div><div class="line">export_method=&apos;ad-hoc&apos;</div><div class="line"></div><div class="line">#指定项目地址</div><div class="line">workspace_path=&quot;$project_path/项目名称.xcworkspace&quot;</div><div class="line">#指定输出路径</div><div class="line">output_path=&quot;project_path/APP&quot;</div><div class="line">#指定输出归档文件地址</div><div class="line">archive_path=&quot;$output_path/项目名称_$&#123;now&#125;.xcarchive&quot;</div><div class="line">#指定输出ipa地址</div><div class="line">ipa_path=&quot;$output_path/项目名称_$&#123;now&#125;.ipa&quot;</div><div class="line">#指定输出ipa名称</div><div class="line">ipa_name=&quot;项目名称_$&#123;now&#125;.ipa&quot;</div><div class="line">#获取执行命令时的commit message</div><div class="line">commit_msg=&quot;$1&quot;</div><div class="line"></div><div class="line">#输出设定的变量值</div><div class="line">echo &quot;===workspace path: $&#123;workspace_path&#125;===&quot;</div><div class="line">echo &quot;===archive path: $&#123;archive_path&#125;===&quot;</div><div class="line">echo &quot;===ipa path: $&#123;ipa_path&#125;===&quot;</div><div class="line">echo &quot;===export method: $&#123;export_method&#125;===&quot;</div><div class="line">echo &quot;===commit msg: $1===&quot;</div><div class="line"></div><div class="line">#先清空前一次build</div><div class="line">gym --workspace $&#123;workspace_path&#125; --scheme $&#123;scheme&#125; --clean --configuration $&#123;configuration&#125; --archive_path $&#123;archive_path&#125; --export_method $&#123;export_method&#125; --output_directory $&#123;output_path&#125; --output_name $&#123;ipa_name&#125;</div><div class="line"></div><div class="line">#上传到fir</div><div class="line">fir publish $&#123;ipa_path&#125; -T fir_token -c &quot;$&#123;commit_msg&#125;&quot;</div><div class="line"></div><div class="line">#输出总用时</div><div class="line">echo &quot;===Finished. Total time: $&#123;SECONDS&#125;s===&quot;</div></pre></td></tr></table></figure>
+<h6 id="为脚本添加执行权限"><a href="#为脚本添加执行权限" class="headerlink" title="为脚本添加执行权限"></a>为脚本添加执行权限</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x build_using_gym.sh</div></pre></td></tr></table></figure>
+<h6 id="运行build-using-gym-sh脚本"><a href="#运行build-using-gym-sh脚本" class="headerlink" title="运行build_using_gym.sh脚本"></a>运行build_using_gym.sh脚本</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./build_using_gym.sh</div></pre></td></tr></table></figure>
+<h6 id="自动打包完成上传到fir"><a href="#自动打包完成上传到fir" class="headerlink" title="自动打包完成上传到fir"></a>自动打包完成上传到fir</h6><h6 id="ipa文件在你项目根路径下project-path-gt-APP文件夹下"><a href="#ipa文件在你项目根路径下project-path-gt-APP文件夹下" class="headerlink" title="ipa文件在你项目根路径下project_path-&gt;APP文件夹下"></a>ipa文件在你项目根路径下project_path-&gt;APP文件夹下</h6><h6 id="想获得更多的帮助，可以查看这些链接，有很多大神哦！！！"><a href="#想获得更多的帮助，可以查看这些链接，有很多大神哦！！！" class="headerlink" title="想获得更多的帮助，可以查看这些链接，有很多大神哦！！！"></a>想获得更多的帮助，可以查看这些链接，有很多大神哦！！！</h6><ol>
+<li><a href="http://www.jianshu.com/search?q=Fastlane%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7&amp;page=1&amp;type=note" target="_blank" rel="external">Fastlane自动化构建工具(</a></li>
+<li><a href="http://www.jianshu.com/p/98afc698b402" target="_blank" rel="external">原文链接</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享与创作，您的支持将鼓励我继续创作分享！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/images/favicon.png" alt="那仅有的执着 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/images/carsales.png" alt="那仅有的执着 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-Fastlane-Fir/" rel="tag"># iOS Fastlane+Fir</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/14/page-7/" rel="next" title="显示Mac的隐藏文件夹">
+                <i class="fa fa-chevron-left"></i> 显示Mac的隐藏文件夹
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="那仅有的执着" />
+          <p class="site-author-name" itemprop="name">那仅有的执着</p>
+           
+              <p class="site-description motion-element" itemprop="description">站点的描述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#更新Ruby"><span class="nav-number">1.</span> <span class="nav-text">更新Ruby</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看Ruby版本"><span class="nav-number">2.</span> <span class="nav-text">查看Ruby版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用Ruby-China替换Ruby的默认源-替换命令如下"><span class="nav-number">3.</span> <span class="nav-text">用Ruby China替换Ruby的默认源,替换命令如下:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fastlane安装"><span class="nav-number">4.</span> <span class="nav-text">Fastlane安装:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#系统要求-macOS或-Linux-使用-Ruby-2-0-0及以上版本-终端执行："><span class="nav-number">4.0.1.</span> <span class="nav-text">系统要求:macOS或 Linux 使用 Ruby 2.0.0及以上版本 终端执行：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#确保Xcode安装了最新版本的命令行工具"><span class="nav-number">4.0.2.</span> <span class="nav-text">确保Xcode安装了最新版本的命令行工具</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#到此安装完成"><span class="nav-number">4.0.3.</span> <span class="nav-text">到此安装完成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fastlane快速使用"><span class="nav-number">5.</span> <span class="nav-text">Fastlane快速使用:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#进入要使用fastlane的项目根目录"><span class="nav-number">5.0.1.</span> <span class="nav-text">进入要使用fastlane的项目根目录</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#初始化fastlane-在项目根目录下生成fastlane文件-包含Appfile和Fastfile配置文件"><span class="nav-number">5.0.2.</span> <span class="nav-text">初始化fastlane,在项目根目录下生成fastlane文件, 包含Appfile和Fastfile配置文件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#根据提示-配置你的app"><span class="nav-number">5.0.3.</span> <span class="nav-text">根据提示,配置你的app</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#这里需要配置apple-id-项目唯一标识等"><span class="nav-number">5.0.4.</span> <span class="nav-text">这里需要配置apple id 项目唯一标识等</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#此时你的项目中已经集成了fastlane"><span class="nav-number">5.0.5.</span> <span class="nav-text">此时你的项目中已经集成了fastlane</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成脚本"><span class="nav-number">6.</span> <span class="nav-text">生成脚本:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#进入项目路径下"><span class="nav-number">6.0.1.</span> <span class="nav-text">进入项目路径下</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#创建并编写脚本"><span class="nav-number">6.0.2.</span> <span class="nav-text">创建并编写脚本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#复制如下代码到build-using-gym-sh文件中-修改项目名称后保存"><span class="nav-number">6.0.3.</span> <span class="nav-text">复制如下代码到build_using_gym.sh文件中,修改项目名称后保存</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#为脚本添加执行权限"><span class="nav-number">6.0.4.</span> <span class="nav-text">为脚本添加执行权限</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#运行build-using-gym-sh脚本"><span class="nav-number">6.0.5.</span> <span class="nav-text">运行build_using_gym.sh脚本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#自动打包完成上传到fir"><span class="nav-number">6.0.6.</span> <span class="nav-text">自动打包完成上传到fir</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ipa文件在你项目根路径下project-path-gt-APP文件夹下"><span class="nav-number">6.0.7.</span> <span class="nav-text">ipa文件在你项目根路径下project_path->APP文件夹下</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#想获得更多的帮助，可以查看这些链接，有很多大神哦！！！"><span class="nav-number">6.0.8.</span> <span class="nav-text">想获得更多的帮助，可以查看这些链接，有很多大神哦！！！</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">那仅有的执着</span>
+</div>
+
+
+<div class="powered-by">
+  春遇到冬，便有了岁月，我遇到你们，便有了青春。
+</div>
+
+<div class="theme-info">
+ 
+</script>
+
+
+</div>
+
+  <div>
+  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "32ba7399fd4d4ee394d365e94f33ad96",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
+
+<script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script>
+<!-- 小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
