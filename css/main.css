@@ -417,7 +417,7 @@ td {
 }
 th,
 td {
-  border-bottom: 3px solid #ddd;
+  border-bottom: 13px solid #ddd;
   border-right: 1px solid #eee;
 }
 th {
@@ -1814,7 +1814,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff5367;
+  background: #99304b;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2614,7 +2614,7 @@ hr {
   background: url("http://osntkgpoj.bkt.clouddn.com/stock-photo-86061397.jpg");
 }
 .header-inner {
-  padding: 35px 0 30px;
+  padding: 55px 0 15px;
 }
 .header-inner:before,
 .header-inner:after {
