@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="泛型: 之前我们介绍数组和可选型的时候, 我们已接触到泛型, 泛型代码可以确保写出灵活的, 可重用的函数在Swift中, 有参数的函数必须指定参数的类型, 现在有几个同名的函数实现相似的功能, 但是参数的类型不同, 例如:123456789func show(para:Int) &amp;#123;print(&amp;quot;Hello \(para)&amp;quot;)&amp;#125;func show(para:S">
+<meta name="keywords" content="iOS Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift3基础语法--泛型">
+<meta property="og:url" content="http://yoursite.com/2017/07/30/Swift3基础语法--泛型/index.html">
+<meta property="og:site_name" content="奥创的博客">
+<meta property="og:description" content="泛型: 之前我们介绍数组和可选型的时候, 我们已接触到泛型, 泛型代码可以确保写出灵活的, 可重用的函数在Swift中, 有参数的函数必须指定参数的类型, 现在有几个同名的函数实现相似的功能, 但是参数的类型不同, 例如:123456789func show(para:Int) &amp;#123;print(&amp;quot;Hello \(para)&amp;quot;)&amp;#125;func show(para:S">
+<meta property="og:updated_time" content="2017-08-03T08:08:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift3基础语法--泛型">
+<meta name="twitter:description" content="泛型: 之前我们介绍数组和可选型的时候, 我们已接触到泛型, 泛型代码可以确保写出灵活的, 可重用的函数在Swift中, 有参数的函数必须指定参数的类型, 现在有几个同名的函数实现相似的功能, 但是参数的类型不同, 例如:123456789func show(para:Int) &amp;#123;print(&amp;quot;Hello \(para)&amp;quot;)&amp;#125;func show(para:S">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/30/Swift3基础语法--泛型/"/>
+
+
+
+
+
+  <title>Swift3基础语法--泛型 | 奥创的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">奥创的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/Swift3基础语法--泛型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="那仅有的执着">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奥创的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift3基础语法--泛型</h1>
+        
+
+        <div class="post-meta">
+        
+  <span id="busuanzi_container_page_pv">  |  阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T17:39:11+08:00">
+                Jul 30 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/30/Swift3基础语法--泛型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="泛型-之前我们介绍数组和可选型的时候-我们已接触到泛型-泛型代码可以确保写出灵活的-可重用的函数"><a href="#泛型-之前我们介绍数组和可选型的时候-我们已接触到泛型-泛型代码可以确保写出灵活的-可重用的函数" class="headerlink" title="泛型: 之前我们介绍数组和可选型的时候, 我们已接触到泛型, 泛型代码可以确保写出灵活的, 可重用的函数"></a>泛型: 之前我们介绍数组和可选型的时候, 我们已接触到泛型, 泛型代码可以确保写出灵活的, 可重用的函数</h4><p>在Swift中, 有参数的函数必须指定参数的类型, 现在有几个同名的函数实现相似的功能, 但是参数的类型不同, 例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">func show(para:Int) &#123;</div><div class="line">print(&quot;Hello \(para)&quot;)</div><div class="line">&#125;</div><div class="line">func show(para:String) &#123;</div><div class="line">print(&quot;Hello \(para)&quot;)</div><div class="line">&#125;</div><div class="line">func show(para:Double) &#123;</div><div class="line">print(&quot;Hello \(para)&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>1.虽然系统可以根据参数类型调用不同的参数, 但在定义上这种方法太过冗余. 泛型所带来的好处就是可以通过定义单个函数来实现s上面的功能. 使用泛型作为参数的函数叫做泛型函数, 下面是与上例有相同的泛型函数定义:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">func show&lt;T&gt;(para:T) &#123;</div><div class="line">print(&quot;Hello \(para)&quot;)</div><div class="line">&#125;</div><div class="line">show(para: &quot;市中心&quot;) // 输出&quot;Hello 市中心&quot;</div><div class="line">show(para: 12) //输出 &quot;Hello 12&quot;</div></pre></td></tr></table></figure></p>
+<p>2.泛型函数在声明时使用了节点类型命名(通常情况下用字母 T, U, V 这样的大写字母来表示)来代替实际类型名(如: Int, String 或 Double). 节点类型在定义时不表示任何具体类型, 在函数被调用时会根据传入的实际类型来制定自身的类型. 另外需要指出的是, 如果函数的泛型列表只有一个 T, 虽然具体类型不需要指定, 但是每个节点类型的参数必须是相同类型的. 例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">func show1&lt;T&gt;(para:T,para2:T)&#123;&#125;</div><div class="line">//在调用这个函数时, 两个参数必须是相同的类型:</div><div class="line">show1(para: 1, para2: 2)</div><div class="line">show1(para: &quot;小花&quot;, para2: &quot;小明&quot;)</div></pre></td></tr></table></figure></p>
+<p>3.定义多个不同类型的泛型,则需要在街括号中加入多个节点:<t,u,v> ···<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//你可以对节点进行一些限制, 比如要求泛类型遵守某些协议, Swift中数组的判等就是这样定义的:</div><div class="line">//public func ==&lt;Element : Equatable&gt;(lhs: [Element], rhs: [Element]) -&gt;Bool</div><div class="line"></div><div class="line">//Element 是节点声明的, 它代表一个泛型, 可以看到这里的泛型名是Element, 相比上面的&quot;T&quot;,&quot;U&quot;,&quot;V&quot;长的多. 这是因为此处的 Element不仅仅是一个占位符的作用, 它还声明了这个泛型代表数组中的元素类型, 有具体的意义, 这种 API 的设计指的我们借鉴;</div></pre></td></tr></table></figure></t,u,v></p>
+<p>4.有时候节点中的泛型需要有更多的限制, 需要使用 where 子句来补充约束条件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">func anyCommonElements&lt;T : SquenceType, U : SequenceType&gt;(lhs : T, _ rhs : U) -&gt; Bool where</div><div class="line">T.Generator.Element: Equatable,</div><div class="line">T.Generator.Element == U.Generator.Element&#123;</div><div class="line">return false</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="泛型协议"><a href="#泛型协议" class="headerlink" title="泛型协议"></a>泛型协议</h4><p>这里的Element不仅仅体现泛型的优势, 还隐性的约束了两个方法的参数必须是相同类型的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">protocol SomeProtocol &#123;</div><div class="line">associatedtype Element</div><div class="line">func elementMethod1(element: Element)</div><div class="line">func elementMethod2(element: Element)</div><div class="line">&#125;</div><div class="line"></div><div class="line">struct TestStruct:SomeProtocol &#123;</div><div class="line">func elementMethod1(element: String) &#123;</div><div class="line">print(&quot;elementMethod1: \(element)&quot;)</div><div class="line">&#125;</div><div class="line">func elementMethod2(element: String) &#123;</div><div class="line">print(&quot;elementMethod2: \(element)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>类似于associatedtype的还有 self 关键字, 代表了协议遵守着本身的类型, 适用于比较这类方法, 其必须传入另一个相同类型的参数才有意义:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">protocol CanCompare &#123;</div><div class="line">func isBigger(other:Self) -&gt; Bool</div><div class="line">&#125;</div><div class="line"></div><div class="line">struct BoxInt:CanCompare &#123;</div><div class="line">var intValue:Int</div><div class="line">func isBigger(other: BoxInt) -&gt; Bool &#123;</div><div class="line">return self.intValue &gt; other.intValue</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">print(BoxInt(intValue: 3).isBigger(other: BoxInt(intValue: 2))) //true</div></pre></td></tr></table></figure></p>
+<h4 id="泛型对象"><a href="#泛型对象" class="headerlink" title="泛型对象:"></a>泛型对象:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">struct TestStruct2&lt; T: Comparable &gt; &#123;</div><div class="line">func elementMethod3(element:T)&#123;</div><div class="line">print(&quot;elementMethod3:\(element)&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func elemetMethod4(element:T)&#123;</div><div class="line">print(&quot;elementMethod4:\(element)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">let test = TestStruct2&lt;Int&gt;()</div><div class="line">test.elementMethod3(element: 1) //elementMethod3:1</div></pre></td></tr></table></figure>
+<p>//注意:如果你尝试在实现时”嵌套”一个泛型,那么会呆滞泛型无法被特化; 比如数组本身是泛型的,在声明数组类型时传入了另一个泛型, 那么你将无法初始化该数组:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">struct TestStruct3&lt; T:Comparable &gt;&#123;</div><div class="line">var array:[T] = [1,3,4,5] as! [T] // as! [T]  这样貌似就能解决了, 但是这样泛型就没有意义了</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>泛型方法: 方法中的泛型使用节点表示法, 使用域只在本方法内,接上面案例修改:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">struct TestStruct4 &#123;</div><div class="line">func elementMethod1&lt; T: Comparable &gt;(element:T)&#123;</div><div class="line">print(&quot;===elementMethod3:\(element)&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func elemetMethod2&lt; T: Comparable &gt;(element:T)&#123;</div><div class="line">print(&quot;===elementMethod4:\(element)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">let test2 = TestStruct4()</div><div class="line">test2.elementMethod1(element: 1)</div><div class="line">test2.elemetMethod2(element: &quot;abc&quot;)</div></pre></td></tr></table></figure></p>
+<p>协议中的 where 关键字:`在之前我们已接触到 where关键字, where 可以和 for in 循环配合实现筛选, where同样可以在协议扩展中;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">protocol SomeProtocol2 &#123;</div><div class="line">associatedtype OwnElement</div><div class="line">func c(element:OwnElement)</div><div class="line">func elementMethod2(element:OwnElement)</div><div class="line">&#125;</div><div class="line">extension SomeProtocol2 where Self:Collection &#123;</div><div class="line">func showCount()&#123;</div><div class="line">print(self.count)c</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">extension Array:SomeProtocol2&#123;</div><div class="line"></div><div class="line">func elementMethod1(element: String) &#123;</div><div class="line">print(&quot;elementMethod1:\(element)&quot;)</div><div class="line">&#125;</div><div class="line">func elementMethod2(element: String) &#123;</div><div class="line">print(&quot;elementMethod2:\(element)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">[1,2,3].showCount() //3</div></pre></td></tr></table></figure></p>
+<p>泛型特化: LLVM 编译将 C 和 OC 的代码放在一个低级的容器中, 然后编译成机器代码; 运行泛型并不是很安全;</p>
+<p>//知识点补充:<br>//输出常量和变量, 可以用print(_:separator:terminator:)函数来输出当前常量或变量的值:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">//print(_:separator:terminator:)是一个用来输出一个或多个值到适当输出区的全局函数。如果用 Xcode，print(_:separator:terminator:)将会输出内容到“console”面板上。separator和terminator参数具有默认值，因此调用这个函数的时候可以忽略它们。默认情况下，该函数通过添加换行符来结束当前行。如果不想换行，可以传递一个空字符串给terminator参数--例如，print(someValue, terminator:&quot;&quot;)。</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">func and&lt;T&gt;(first:T,_ second:T) &#123;</div><div class="line">print(first,second, separator: &quot;+&quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div><div class="line">and(first: 3, 5)</div><div class="line">and(first: &quot;a&quot;, &quot;b&quot;)</div><div class="line"></div><div class="line">// 此时 LLVM 在编译时会把 and 函数特化为:</div><div class="line">func and(first:Int,_ second:Int)&#123;</div><div class="line">print(first,second, separator: &quot;+&quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div><div class="line">//以及</div><div class="line">func and(first:String,_ second:String)&#123;</div><div class="line">print(first,second, separator: &quot;+&quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享与创作，您的支持将鼓励我继续创作分享！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/images/favicon.png" alt="那仅有的执着 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/images/carsales.png" alt="那仅有的执着 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-Swift/" rel="tag"># iOS Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/30/Swift3基础语法--扩展/" rel="next" title="Swift3基础语法--扩展">
+                <i class="fa fa-chevron-left"></i> Swift3基础语法--扩展
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/31/Swift4基础语法--KVC和KVO/" rel="prev" title="Swift4基础语法--KVC和KVO">
+                Swift4基础语法--KVC和KVO <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="那仅有的执着" />
+          <p class="site-author-name" itemprop="name">那仅有的执着</p>
+           
+              <p class="site-description motion-element" itemprop="description">站点的描述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <html>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型-之前我们介绍数组和可选型的时候-我们已接触到泛型-泛型代码可以确保写出灵活的-可重用的函数"><span class="nav-number">1.</span> <span class="nav-text">泛型: 之前我们介绍数组和可选型的时候, 我们已接触到泛型, 泛型代码可以确保写出灵活的, 可重用的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型协议"><span class="nav-number">2.</span> <span class="nav-text">泛型协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#泛型对象"><span class="nav-number">3.</span> <span class="nav-text">泛型对象:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">那仅有的执着</span>
+</div>
+
+
+<div class="powered-by">
+  春遇到冬，便有了岁月，我遇到你们，便有了青春。
+</div>
+
+<div class="theme-info">
+ 
+</script>
+
+
+</div>
+
+  <div>
+  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "32ba7399fd4d4ee394d365e94f33ad96",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
+
+<!-- <script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script> -->
+<!-- 小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

@@ -1,0 +1,825 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="继承语法继承是面向对象最显著的一个特性, 继承是从已经有的类中派生出新的类新的类能够继承已有类的属性和方法, 并能扩展新的能力术语: 基类(父类, 超类), 派生类(子类, 继承类)语法:class 子类: 父类{} 继承优点: 代码重用继承缺点: 增加程序耦合度, 父类改变会影响子类注意:Swift和OC一样没有多继承 12345678910111213141516171819202122232">
+<meta name="keywords" content="iOS Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift3基础语法--继承">
+<meta property="og:url" content="http://yoursite.com/2017/07/29/Swift3基础语法--继承/index.html">
+<meta property="og:site_name" content="奥创的博客">
+<meta property="og:description" content="继承语法继承是面向对象最显著的一个特性, 继承是从已经有的类中派生出新的类新的类能够继承已有类的属性和方法, 并能扩展新的能力术语: 基类(父类, 超类), 派生类(子类, 继承类)语法:class 子类: 父类{} 继承优点: 代码重用继承缺点: 增加程序耦合度, 父类改变会影响子类注意:Swift和OC一样没有多继承 12345678910111213141516171819202122232">
+<meta property="og:updated_time" content="2017-08-03T06:53:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift3基础语法--继承">
+<meta name="twitter:description" content="继承语法继承是面向对象最显著的一个特性, 继承是从已经有的类中派生出新的类新的类能够继承已有类的属性和方法, 并能扩展新的能力术语: 基类(父类, 超类), 派生类(子类, 继承类)语法:class 子类: 父类{} 继承优点: 代码重用继承缺点: 增加程序耦合度, 父类改变会影响子类注意:Swift和OC一样没有多继承 12345678910111213141516171819202122232">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/29/Swift3基础语法--继承/"/>
+
+
+
+
+
+  <title>Swift3基础语法--继承 | 奥创的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">奥创的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/Swift3基础语法--继承/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="那仅有的执着">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奥创的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift3基础语法--继承</h1>
+        
+
+        <div class="post-meta">
+        
+  <span id="busuanzi_container_page_pv">  |  阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T15:22:01+08:00">
+                Jul 29 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/29/Swift3基础语法--继承/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="继承语法"><a href="#继承语法" class="headerlink" title="继承语法"></a>继承语法</h4><p>继承是面向对象最显著的一个特性, 继承是从已经有的类中派生出新的类<br>新的类能够继承已有类的属性和方法, 并能扩展新的能力<br>术语: 基类(父类, 超类), 派生类(子类, 继承类)<br>语法:<br>class 子类: 父类{<br>}</p>
+<p>继承优点: 代码重用<br>继承缺点: 增加程序耦合度, 父类改变会影响子类<br>注意:Swift和OC一样没有多继承</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">class Man &#123;</div><div class="line">var name: String = &quot;hjq&quot;</div><div class="line">var age: Int = 23</div><div class="line">func sleep()</div><div class="line">&#123;</div><div class="line">print(&quot;睡觉&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//继承Man的子类</div><div class="line">class SuperMan: Man &#123;</div><div class="line">var power: Int = 100</div><div class="line">func fly() &#123;</div><div class="line">//子类可以继承父类的属性</div><div class="line">print(&quot;飞 \(name) \(age)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var m = Man()</div><div class="line">m.sleep()</div><div class="line">//父类不可以使用子类的方法</div><div class="line">//m.fly()</div><div class="line"></div><div class="line">var sm = SuperMan()</div><div class="line">//子类可以继承父类的方法</div><div class="line">sm.sleep()</div><div class="line">sm.fly()</div></pre></td></tr></table></figure>
+<h4 id="super关键字-派生类-子类-中可以通过super关键字来引用父类的属性和方法"><a href="#super关键字-派生类-子类-中可以通过super关键字来引用父类的属性和方法" class="headerlink" title="super关键字: 派生类(子类)中可以通过super关键字来引用父类的属性和方法"></a>super关键字: 派生类(子类)中可以通过super关键字来引用父类的属性和方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">class Man2  &#123;</div><div class="line">var name: String = &quot;HaRi&quot;</div><div class="line">var age: Int = 20</div><div class="line">func sleep()</div><div class="line">&#123;</div><div class="line">print(&quot;睡吧!&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class SuperMan2: Man2 &#123;</div><div class="line">var power: Int = 100</div><div class="line">func eat()</div><div class="line">&#123;</div><div class="line">print(&quot;吃饭喽!&quot;)</div><div class="line">&#125;</div><div class="line">func fly()</div><div class="line">&#123;</div><div class="line">//子类可以继承父类的属性</div><div class="line">print(&quot;飞 \(name) \(age)&quot;)</div><div class="line">&#125;</div><div class="line">func eatAndSleep()</div><div class="line">&#123;</div><div class="line">eat()</div><div class="line">//1.如果没有写super, 那么会在当前类中查找, 如果找不到才会再去父类中查找;</div><div class="line">//2.如果写了super, 会直接去父类中查找.</div><div class="line">super.sleep()</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var sm2 = SuperMan2()</div><div class="line">sm2.eatAndSleep()</div></pre></td></tr></table></figure>
+<h4 id="方法重写-override-重写父类方法-必须加上-override-关键字"><a href="#方法重写-override-重写父类方法-必须加上-override-关键字" class="headerlink" title="方法重写: override 重写父类方法, 必须加上 override 关键字"></a>方法重写: override 重写父类方法, 必须加上 override 关键字</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">class Man3 &#123;</div><div class="line">var name: String = &quot;HanJunqiang&quot;</div><div class="line">var age: Int = 24</div><div class="line">func sleep()</div><div class="line">&#123;</div><div class="line">print(&quot;睡觉😴&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan3: Man3 &#123;</div><div class="line">var power: Int = 200</div><div class="line"></div><div class="line">//1.override关键字主要是为了明确表示重写父类方法;</div><div class="line">//2.所以如果要重写父类方法, 必须加上ovrride关键字.</div><div class="line">override func sleep() &#123;</div><div class="line">//        sleep()  // Error! 特别注意: 不能这样调用父类方法, 会导致递归!</div><div class="line">//正确姿势</div><div class="line">super.sleep()</div><div class="line">print(&quot;子类睡觉😴&quot;)</div><div class="line">&#125;</div><div class="line">func eat()</div><div class="line">&#123;</div><div class="line">print(&quot;吃饭🍚&quot;)</div><div class="line">&#125;</div><div class="line">func fly()</div><div class="line">&#123;</div><div class="line">print(&quot;飞 \(name) \(age)&quot;)</div><div class="line">&#125;</div><div class="line">func eatAndSleep()</div><div class="line">&#123;</div><div class="line">eat()</div><div class="line">sleep()</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var sm3 = SuperMan3()</div><div class="line">//通过子类调用, 优先调用子类重写的方法</div><div class="line">//sm3.sleep()</div><div class="line">sm3.eatAndSleep()</div></pre></td></tr></table></figure>
+<h4 id="重写属性—无论是存储属性还是计算属性-都只能重写为计算属性"><a href="#重写属性—无论是存储属性还是计算属性-都只能重写为计算属性" class="headerlink" title="重写属性—无论是存储属性还是计算属性, 都只能重写为计算属性"></a>重写属性—无论是存储属性还是计算属性, 都只能重写为计算属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">class Man4 &#123;</div><div class="line">var name: String = &quot;hjq995&quot; //存储属性</div><div class="line">var age: Int&#123; //计算属性</div><div class="line">get&#123;</div><div class="line">return 30</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;man new age \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">func sleep()</div><div class="line">&#123;</div><div class="line">print(&quot;睡觉&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan4: Man4 &#123;</div><div class="line">var power: Int = 300</div><div class="line"></div><div class="line">//1.可以将父类的存储属性重写为计算属性;</div><div class="line">//2.但不可以将父类的存储属性又重写为存储属性, 因为这样重写没有意义.</div><div class="line">override var name: String&#123;</div><div class="line">get&#123;</div><div class="line">return &quot;han&quot;</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;SuperMan new name \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//可以将父类的计算属性重写为计算属性, 同样不能重写为存储属性</div><div class="line">override var age: Int&#123; //计算属性</div><div class="line">get&#123;</div><div class="line">return 20</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;SuprMan new age \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let sm4 = SuperMan4()</div><div class="line">//通过子类对象来调用重写的属性或者方法, 肯定会调用子类中重写的版本</div><div class="line">sm4.name = &quot;Hello!!!!&quot;</div><div class="line">sm4.age = 60</div></pre></td></tr></table></figure>
+<h4 id="重写属性的限制"><a href="#重写属性的限制" class="headerlink" title="重写属性的限制"></a>重写属性的限制</h4><p>1.读写计算属性/存储属性, 是否可以重写为只读属性? (权限变小)不可以<br>2.只读计算属性, 是否可以在重写时重写为读写计算属性? (权限变大)可以<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">class Man5 &#123;</div><div class="line">var name: String = &quot;hjq&quot; //存储属性</div><div class="line">var age: Int&#123;</div><div class="line">get&#123;</div><div class="line">return 30</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;man new age \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">func sleep()</div><div class="line">&#123;</div><div class="line">print(&quot;睡觉&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan5: Man5 &#123;</div><div class="line">var power: Int = 200</div><div class="line">override var name: String&#123;</div><div class="line">get&#123;</div><div class="line">return &quot;jq&quot;</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;SuperMan new name \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">override var age: Int&#123; //计算属性</div><div class="line">get&#123;</div><div class="line">return 30</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;SuperMan new age \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="重写属性观察器"><a href="#重写属性观察器" class="headerlink" title="重写属性观察器"></a>重写属性观察器</h4><p>只能给非 lazy 属性的变量存储属性设定属性观察器,<br>不能给计算属性设置属性观察器, 给计算属性设置属性观察起没有任何意义<br>属性观察器限制:<br>1.不能在子类中重写父类只读的存储属性;<br>2.不能给lazy的属性设置属性观察器.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">class Man6 &#123;</div><div class="line">var name: String = &quot;hjq&quot;</div><div class="line">var age: Int = 0 &#123; //存储属性</div><div class="line">willSet&#123;</div><div class="line">print(&quot;super new \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">didSet&#123;</div><div class="line">print(&quot;super old \(oldValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var height: Double &#123;</div><div class="line">get&#123;</div><div class="line">print(&quot;super get&quot;)</div><div class="line">return 100.0</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;super set&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan6: Man6 &#123;</div><div class="line">//可以在子类中重写父类的存储属性为属性观察器</div><div class="line">override var name: String &#123;</div><div class="line">willSet&#123;</div><div class="line">print(&quot;new \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">didSet&#123;</div><div class="line">print(&quot;old \(oldValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//可以在子类中重写父类的属性观察器</div><div class="line">override var age: Int &#123;</div><div class="line">willSet&#123;</div><div class="line">print(&quot;child new \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">didSet&#123;</div><div class="line">print(&quot;child old \(oldValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">override var height: Double &#123;</div><div class="line">willSet&#123;</div><div class="line">print(&quot;child height willSet&quot;)</div><div class="line">&#125;</div><div class="line">didSet&#123;</div><div class="line">print(&quot;child height didSet&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var m6 = SuperMan6()</div><div class="line">m6.age = 50</div><div class="line">print(m6.age)</div><div class="line">m6.height = 20.0</div></pre></td></tr></table></figure></p>
+<h4 id="利用final关键字防止重写"><a href="#利用final关键字防止重写" class="headerlink" title="利用final关键字防止重写:"></a>利用final关键字防止重写:</h4><p>1.final关键字既可以修饰属性, 也可以修饰方法, 并且还可以修饰类;<br>2.被final关键字修饰的属性和方法不能被重写;<br>3.被final关键字修饰的类不能被继承.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">final class Man7 &#123;</div><div class="line">final var name: String = &quot;jq&quot;</div><div class="line">final var age: Int = 0 &#123; //存储属性</div><div class="line">willSet&#123;</div><div class="line">print(&quot;super new \(newValue)&quot;)</div><div class="line">&#125;</div><div class="line">didSet&#123;</div><div class="line">print(&quot;super old \(oldValue)&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">final var height: Double &#123;</div><div class="line">get&#123;</div><div class="line">print(&quot;super get&quot;)</div><div class="line">return 20.0</div><div class="line">&#125;</div><div class="line">set&#123;</div><div class="line">print(&quot;super set&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">final func eat()</div><div class="line">&#123;</div><div class="line">print(&quot;吃饭🍚&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享与创作，您的支持将鼓励我继续创作分享！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/images/favicon.png" alt="那仅有的执着 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/images/carsales.png" alt="那仅有的执着 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-Swift/" rel="tag"># iOS Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/Swift3基础语法--下标subscripts/" rel="next" title="Swift3基础语法--下标subscripts">
+                <i class="fa fa-chevron-left"></i> Swift3基础语法--下标subscripts
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/Swift3基础语法--构造方法1/" rel="prev" title="Swift3基础语法--构造方法1">
+                Swift3基础语法--构造方法1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="那仅有的执着" />
+          <p class="site-author-name" itemprop="name">那仅有的执着</p>
+           
+              <p class="site-description motion-element" itemprop="description">站点的描述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <html>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#继承语法"><span class="nav-number">1.</span> <span class="nav-text">继承语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#super关键字-派生类-子类-中可以通过super关键字来引用父类的属性和方法"><span class="nav-number">2.</span> <span class="nav-text">super关键字: 派生类(子类)中可以通过super关键字来引用父类的属性和方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法重写-override-重写父类方法-必须加上-override-关键字"><span class="nav-number">3.</span> <span class="nav-text">方法重写: override 重写父类方法, 必须加上 override 关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重写属性—无论是存储属性还是计算属性-都只能重写为计算属性"><span class="nav-number">4.</span> <span class="nav-text">重写属性—无论是存储属性还是计算属性, 都只能重写为计算属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重写属性的限制"><span class="nav-number">5.</span> <span class="nav-text">重写属性的限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重写属性观察器"><span class="nav-number">6.</span> <span class="nav-text">重写属性观察器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用final关键字防止重写"><span class="nav-number">7.</span> <span class="nav-text">利用final关键字防止重写:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">那仅有的执着</span>
+</div>
+
+
+<div class="powered-by">
+  春遇到冬，便有了岁月，我遇到你们，便有了青春。
+</div>
+
+<div class="theme-info">
+ 
+</script>
+
+
+</div>
+
+  <div>
+  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "32ba7399fd4d4ee394d365e94f33ad96",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
+
+<!-- <script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script> -->
+<!-- 小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

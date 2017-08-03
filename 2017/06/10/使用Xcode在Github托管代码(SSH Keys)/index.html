@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Github," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.登录GitHub，New repository一个仓库(注册帐号就不多赘述了) 2.选择HTTPS方式，复制git地址(新建以后会到这个仓库主界面) 3.来到Xcode–&amp;gt;Preferences–&amp;gt;Accounts–&amp;gt;左下角+号–&amp;gt;Add repository(这里需要验证本地私钥) 4.认识公钥、私钥 来到Github个人仓库，点击右上角头像settings  – &amp;">
+<meta name="keywords" content="Github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Xcode在Github托管代码(SSH Keys)">
+<meta property="og:url" content="http://yoursite.com/2017/06/10/使用Xcode在Github托管代码(SSH Keys)/index.html">
+<meta property="og:site_name" content="奥创的博客">
+<meta property="og:description" content="1.登录GitHub，New repository一个仓库(注册帐号就不多赘述了) 2.选择HTTPS方式，复制git地址(新建以后会到这个仓库主界面) 3.来到Xcode–&amp;gt;Preferences–&amp;gt;Accounts–&amp;gt;左下角+号–&amp;gt;Add repository(这里需要验证本地私钥) 4.认识公钥、私钥 来到Github个人仓库，点击右上角头像settings  – &amp;">
+<meta property="og:image" content="http://yoursite.com/uploads/images/create.jpeg">
+<meta property="og:image" content="http://yoursite.com/uploads/images/sshkeys.png">
+<meta property="og:image" content="http://yoursite.com/uploads/images/warehouse.png">
+<meta property="og:image" content="http://yoursite.com/uploads/images/yue.png">
+<meta property="og:image" content="http://yoursite.com/uploads/images/keys.jpg">
+<meta property="og:image" content="http://yoursite.com/uploads/images/shengcehng.jpeg">
+<meta property="og:image" content="http://yoursite.com/uploads/images/addkey.png">
+<meta property="og:image" content="http://yoursite.com/uploads/images/checkout.png">
+<meta property="og:updated_time" content="2017-06-14T09:33:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Xcode在Github托管代码(SSH Keys)">
+<meta name="twitter:description" content="1.登录GitHub，New repository一个仓库(注册帐号就不多赘述了) 2.选择HTTPS方式，复制git地址(新建以后会到这个仓库主界面) 3.来到Xcode–&amp;gt;Preferences–&amp;gt;Accounts–&amp;gt;左下角+号–&amp;gt;Add repository(这里需要验证本地私钥) 4.认识公钥、私钥 来到Github个人仓库，点击右上角头像settings  – &amp;">
+<meta name="twitter:image" content="http://yoursite.com/uploads/images/create.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/10/使用Xcode在Github托管代码(SSH Keys)/"/>
+
+
+
+
+
+  <title>使用Xcode在Github托管代码(SSH Keys) | 奥创的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">奥创的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/使用Xcode在Github托管代码(SSH Keys)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="那仅有的执着">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奥创的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用Xcode在Github托管代码(SSH Keys)</h1>
+        
+
+        <div class="post-meta">
+        
+  <span id="busuanzi_container_page_pv">  |  阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-10T14:33:23+08:00">
+                Jun 10 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/Github/" itemprop="url" rel="index">
+                    <span itemprop="name">Github</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/10/使用Xcode在Github托管代码(SSH Keys)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="1-登录GitHub，New-repository一个仓库-注册帐号就不多赘述了"><a href="#1-登录GitHub，New-repository一个仓库-注册帐号就不多赘述了" class="headerlink" title="1.登录GitHub，New repository一个仓库(注册帐号就不多赘述了)"></a>1.登录GitHub，New repository一个仓库(注册帐号就不多赘述了)</h5><p><img src="/uploads/images/create.jpeg" alt="笔记"></p>
+<h5 id="2-选择HTTPS方式，复制git地址-新建以后会到这个仓库主界面"><a href="#2-选择HTTPS方式，复制git地址-新建以后会到这个仓库主界面" class="headerlink" title="2.选择HTTPS方式，复制git地址(新建以后会到这个仓库主界面)"></a>2.选择HTTPS方式，复制git地址(新建以后会到这个仓库主界面)</h5><p><img src="/uploads/images/sshkeys.png" alt="笔记"></p>
+<h5 id="3-来到Xcode–-gt-Preferences–-gt-Accounts–-gt-左下角-号–-gt-Add-repository-这里需要验证本地私钥"><a href="#3-来到Xcode–-gt-Preferences–-gt-Accounts–-gt-左下角-号–-gt-Add-repository-这里需要验证本地私钥" class="headerlink" title="3.来到Xcode–&gt;Preferences–&gt;Accounts–&gt;左下角+号–&gt;Add repository(这里需要验证本地私钥)"></a>3.来到Xcode–&gt;Preferences–&gt;Accounts–&gt;左下角+号–&gt;Add repository(这里需要验证本地私钥)</h5><p><img src="/uploads/images/warehouse.png" alt="笔记"></p>
+<h5 id="4-认识公钥、私钥"><a href="#4-认识公钥、私钥" class="headerlink" title="4.认识公钥、私钥"></a>4.认识公钥、私钥</h5><p><img src="/uploads/images/yue.png" alt="笔记"></p>
+<h5 id="来到Github个人仓库，点击右上角头像settings-–-gt-左边选择-SSH-and-GPG-keys"><a href="#来到Github个人仓库，点击右上角头像settings-–-gt-左边选择-SSH-and-GPG-keys" class="headerlink" title="来到Github个人仓库，点击右上角头像settings  – &gt;左边选择 SSH and GPG keys"></a>来到Github个人仓库，点击右上角头像settings  – &gt;左边选择 SSH and GPG keys</h5><p><img src="/uploads/images/keys.jpg" alt="笔记"></p>
+<h5 id="6-点击-Generating-a-new-SSH-key-and-adding-it-to-the-ssh-agent-根据命令生成公私钥"><a href="#6-点击-Generating-a-new-SSH-key-and-adding-it-to-the-ssh-agent-根据命令生成公私钥" class="headerlink" title="6.点击   [Generating a new SSH key and adding it to the ssh-agent]  根据命令生成公私钥"></a>6.点击   [Generating a new SSH key and adding it to the ssh-agent]  根据命令生成公私钥</h5><p><img src="/uploads/images/shengcehng.jpeg" alt="笔记"></p>
+<h5 id="7-7-得到公私钥以后，返回到settings-–-gt-SSH-and-GPG-keys-，点击右上角的New-SSH-Key"><a href="#7-7-得到公私钥以后，返回到settings-–-gt-SSH-and-GPG-keys-，点击右上角的New-SSH-Key" class="headerlink" title="7.7.得到公私钥以后，返回到settings  – &gt;SSH and GPG keys ，点击右上角的New SSH Key"></a>7.7.得到公私钥以后，返回到settings  – &gt;SSH and GPG keys ，点击右上角的New SSH Key</h5><ul>
+<li>Title  起一个名字</li>
+<li>Key  公钥  （.pub的内容）（可以前往Finder–&gt;个人 中查看）<br><img src="/uploads/images/addkey.png" alt="笔记"><h5 id="8-Xcode–-gt-Preferences–-gt-Accounts–-gt-左下角-号–-gt-Add-repository如果上次不成功，这次就可以成功了"><a href="#8-Xcode–-gt-Preferences–-gt-Accounts–-gt-左下角-号–-gt-Add-repository如果上次不成功，这次就可以成功了" class="headerlink" title="8.Xcode–&gt;Preferences–&gt;Accounts–&gt;左下角+号–&gt;Add repository如果上次不成功，这次就可以成功了"></a>8.Xcode–&gt;Preferences–&gt;Accounts–&gt;左下角+号–&gt;Add repository如果上次不成功，这次就可以成功了</h5></li>
+</ul>
+<h5 id="9-Xcode–-gt-Source-Control–-gt-Check-out-–-gt-选择新增的仓库-Next-保存-到桌面就可以了-会生成一个带有git仓库的文件夹-。"><a href="#9-Xcode–-gt-Source-Control–-gt-Check-out-–-gt-选择新增的仓库-Next-保存-到桌面就可以了-会生成一个带有git仓库的文件夹-。" class="headerlink" title="9.Xcode–&gt;Source Control–&gt;Check out –&gt; 选择新增的仓库 Next 保存 到桌面就可以了(会生成一个带有git仓库的文件夹)。"></a>9.Xcode–&gt;Source Control–&gt;Check out –&gt; 选择新增的仓库 Next 保存 到桌面就可以了(会生成一个带有git仓库的文件夹)。</h5><p><img src="/uploads/images/checkout.png" alt="笔记"></p>
+<h5 id="10-初始化一个项目，路径保存到-刚才-新增仓库的文件夹下-，点击Source-Control–-gt-commit-（如果不能提交，打开-终端-cd-项目路径，回车，输入git-add-A把文件提交到暂缓区），然后回到Xcode的commit的同时（选择左下角的push-to-remote-）提交到远程仓库，（记住，要写注释），如果git仓库中没有，那就Source-Control–-gt-push一次就OK了，这个时候再去git仓库中查看，就可以看到自己新提交的项目了"><a href="#10-初始化一个项目，路径保存到-刚才-新增仓库的文件夹下-，点击Source-Control–-gt-commit-（如果不能提交，打开-终端-cd-项目路径，回车，输入git-add-A把文件提交到暂缓区），然后回到Xcode的commit的同时（选择左下角的push-to-remote-）提交到远程仓库，（记住，要写注释），如果git仓库中没有，那就Source-Control–-gt-push一次就OK了，这个时候再去git仓库中查看，就可以看到自己新提交的项目了" class="headerlink" title="10.初始化一个项目，路径保存到 刚才 新增仓库的文件夹下 ，点击Source Control–&gt;commit （如果不能提交，打开 终端 cd 项目路径，回车，输入git add -A把文件提交到暂缓区），然后回到Xcode的commit的同时（选择左下角的push to remote ）提交到远程仓库，（记住，要写注释），如果git仓库中没有，那就Source Control–&gt;push一次就OK了，这个时候再去git仓库中查看，就可以看到自己新提交的项目了"></a>10.初始化一个项目，路径保存到 刚才 新增仓库的文件夹下 ，点击Source Control–&gt;commit （如果不能提交，打开 终端 cd 项目路径，回车，输入git add -A把文件提交到暂缓区），然后回到Xcode的commit的同时（选择左下角的push to remote ）提交到远程仓库，（记住，要写注释），如果git仓库中没有，那就Source Control–&gt;push一次就OK了，这个时候再去git仓库中查看，就可以看到自己新提交的项目了</h5><hr>
+<ul>
+<li>如果有什么不懂的地方可以给我留言呦！！！</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享与创作，您的支持将鼓励我继续创作分享！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/images/favicon.png" alt="那仅有的执着 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/images/carsales.png" alt="那仅有的执着 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Github/" rel="tag"># Github</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/05/一些简单的算法/" rel="next" title="一些简单的算法">
+                <i class="fa fa-chevron-left"></i> 一些简单的算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/10/使用Xcode在Github托管代码(HTTPS)/" rel="prev" title="使用Xcode在Github托管代码(HTTPS)">
+                使用Xcode在Github托管代码(HTTPS) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="那仅有的执着" />
+          <p class="site-author-name" itemprop="name">那仅有的执着</p>
+           
+              <p class="site-description motion-element" itemprop="description">站点的描述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <html>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-登录GitHub，New-repository一个仓库-注册帐号就不多赘述了"><span class="nav-number">1.</span> <span class="nav-text">1.登录GitHub，New repository一个仓库(注册帐号就不多赘述了)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-选择HTTPS方式，复制git地址-新建以后会到这个仓库主界面"><span class="nav-number">2.</span> <span class="nav-text">2.选择HTTPS方式，复制git地址(新建以后会到这个仓库主界面)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-来到Xcode–-gt-Preferences–-gt-Accounts–-gt-左下角-号–-gt-Add-repository-这里需要验证本地私钥"><span class="nav-number">3.</span> <span class="nav-text">3.来到Xcode–>Preferences–>Accounts–>左下角+号–>Add repository(这里需要验证本地私钥)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-认识公钥、私钥"><span class="nav-number">4.</span> <span class="nav-text">4.认识公钥、私钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#来到Github个人仓库，点击右上角头像settings-–-gt-左边选择-SSH-and-GPG-keys"><span class="nav-number">5.</span> <span class="nav-text">来到Github个人仓库，点击右上角头像settings  – >左边选择 SSH and GPG keys</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-点击-Generating-a-new-SSH-key-and-adding-it-to-the-ssh-agent-根据命令生成公私钥"><span class="nav-number">6.</span> <span class="nav-text">6.点击   [Generating a new SSH key and adding it to the ssh-agent]  根据命令生成公私钥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-7-得到公私钥以后，返回到settings-–-gt-SSH-and-GPG-keys-，点击右上角的New-SSH-Key"><span class="nav-number">7.</span> <span class="nav-text">7.7.得到公私钥以后，返回到settings  – >SSH and GPG keys ，点击右上角的New SSH Key</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-Xcode–-gt-Preferences–-gt-Accounts–-gt-左下角-号–-gt-Add-repository如果上次不成功，这次就可以成功了"><span class="nav-number">8.</span> <span class="nav-text">8.Xcode–>Preferences–>Accounts–>左下角+号–>Add repository如果上次不成功，这次就可以成功了</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-Xcode–-gt-Source-Control–-gt-Check-out-–-gt-选择新增的仓库-Next-保存-到桌面就可以了-会生成一个带有git仓库的文件夹-。"><span class="nav-number">9.</span> <span class="nav-text">9.Xcode–>Source Control–>Check out –> 选择新增的仓库 Next 保存 到桌面就可以了(会生成一个带有git仓库的文件夹)。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-初始化一个项目，路径保存到-刚才-新增仓库的文件夹下-，点击Source-Control–-gt-commit-（如果不能提交，打开-终端-cd-项目路径，回车，输入git-add-A把文件提交到暂缓区），然后回到Xcode的commit的同时（选择左下角的push-to-remote-）提交到远程仓库，（记住，要写注释），如果git仓库中没有，那就Source-Control–-gt-push一次就OK了，这个时候再去git仓库中查看，就可以看到自己新提交的项目了"><span class="nav-number">10.</span> <span class="nav-text">10.初始化一个项目，路径保存到 刚才 新增仓库的文件夹下 ，点击Source Control–>commit （如果不能提交，打开 终端 cd 项目路径，回车，输入git add -A把文件提交到暂缓区），然后回到Xcode的commit的同时（选择左下角的push to remote ）提交到远程仓库，（记住，要写注释），如果git仓库中没有，那就Source Control–>push一次就OK了，这个时候再去git仓库中查看，就可以看到自己新提交的项目了</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">那仅有的执着</span>
+</div>
+
+
+<div class="powered-by">
+  春遇到冬，便有了岁月，我遇到你们，便有了青春。
+</div>
+
+<div class="theme-info">
+ 
+</script>
+
+
+</div>
+
+  <div>
+  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "32ba7399fd4d4ee394d365e94f33ad96",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
+
+<!-- <script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script> -->
+<!-- 小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

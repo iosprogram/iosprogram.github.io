@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS Swift," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="继承与构造方法: 指定构造与便利构造器方法123456789class Person &amp;#123;var name:Stringvar age:Int//指定构造方法都是以init开头init(name:String, age:Int)&amp;#123;self.name = nameself.age = age&amp;#125; //1.如果是值类型没问题, 称之为构造器代理;//2.但是如果是引用类型报错">
+<meta name="keywords" content="iOS Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift3基础语法--构造方法2">
+<meta property="og:url" content="http://yoursite.com/2017/07/29/Swift3基础语法--构造方法2/index.html">
+<meta property="og:site_name" content="奥创的博客">
+<meta property="og:description" content="继承与构造方法: 指定构造与便利构造器方法123456789class Person &amp;#123;var name:Stringvar age:Int//指定构造方法都是以init开头init(name:String, age:Int)&amp;#123;self.name = nameself.age = age&amp;#125; //1.如果是值类型没问题, 称之为构造器代理;//2.但是如果是引用类型报错">
+<meta property="og:updated_time" content="2017-08-03T07:12:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift3基础语法--构造方法2">
+<meta name="twitter:description" content="继承与构造方法: 指定构造与便利构造器方法123456789class Person &amp;#123;var name:Stringvar age:Int//指定构造方法都是以init开头init(name:String, age:Int)&amp;#123;self.name = nameself.age = age&amp;#125; //1.如果是值类型没问题, 称之为构造器代理;//2.但是如果是引用类型报错">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/29/Swift3基础语法--构造方法2/"/>
+
+
+
+
+
+  <title>Swift3基础语法--构造方法2 | 奥创的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">奥创的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间日记</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/29/Swift3基础语法--构造方法2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="那仅有的执着">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奥创的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift3基础语法--构造方法2</h1>
+        
+
+        <div class="post-meta">
+        
+  <span id="busuanzi_container_page_pv">  |  阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-29T17:33:21+08:00">
+                Jul 29 2017
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/" itemprop="url" rel="index">
+                    <span itemprop="name">技术分享</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术分享/Swift/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/29/Swift3基础语法--构造方法2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="继承与构造方法-指定构造与便利构造器方法"><a href="#继承与构造方法-指定构造与便利构造器方法" class="headerlink" title="继承与构造方法: 指定构造与便利构造器方法"></a>继承与构造方法: 指定构造与便利构造器方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class Person &#123;</div><div class="line">var name:String</div><div class="line">var age:Int</div><div class="line">//指定构造方法都是以init开头</div><div class="line">init(name:String, age:Int)</div><div class="line">&#123;</div><div class="line">self.name = name</div><div class="line">self.age = age</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>//1.如果是值类型没问题, 称之为构造器代理;<br>//2.但是如果是引用类型报错, 需要在前面加上 convenience关键字;<br>//3.被convenience关键字修饰的构造方法称之为便利构造器, 通过调用其他构造方法来初始化;<br>//4.反而言之, 便利构造器中一定是调用其他构造方法初始化的, 一定要出现self.init<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">convenience init()</div><div class="line">&#123;</div><div class="line">self.init(name: &quot;hjq&quot;, age: 26)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>//类可以拥有多个构造方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">init(name:String)</div><div class="line">&#123;</div><div class="line">self.name = name</div><div class="line">self.age = 0</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//不能再指定构造方法中调用便利构造器方法</div><div class="line">//换言之,指定构造方法中不能出现self.init</div><div class="line">//        self.init()</div><div class="line">&#125;</div><div class="line"></div><div class="line">convenience init(age:Int)</div><div class="line">&#123;</div><div class="line">//可以在便利构造器中调用指定构造器</div><div class="line">//        self.init(name: &quot;hjq&quot;, age: 24)</div><div class="line">self.init()</div><div class="line">&#125;</div><div class="line">// 便利构造器不能和指定构造器同名</div><div class="line">//    convenience init(name:String)</div><div class="line">//    &#123;</div><div class="line">//    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="派生类的构造方法"><a href="#派生类的构造方法" class="headerlink" title="派生类的构造方法"></a>派生类的构造方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">class Man &#123;</div><div class="line">var name:String</div></pre></td></tr></table></figure>
+<p>//指定构造方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">init(name:String)</div><div class="line">&#123;</div><div class="line">self.name = name</div><div class="line">&#125;</div><div class="line">convenience init()&#123;</div><div class="line">self.init(name: &quot;hjq&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line">class SuperMan: Man &#123;</div><div class="line">var age:Int</div></pre></td></tr></table></figure></p>
+<p>// 注意:<br>// 1.默认情况下构造方法不会被继承<br>// 2.基类的先初始存储属性只能通过基类的构造方法初始化<br>// 3.初始化存储属性时必须化当前类再初始化父类<br>// 4.不能通过便利构造方法初始化父类, 只能通过调用指定构造方法初始化父类<br>//指定构造器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">init(age:Int) &#123;</div><div class="line">self.age = age</div><div class="line">super.init(name: &quot;han&quot;)</div><div class="line">//        super.init()</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="构造器间的调用规则"><a href="#构造器间的调用规则" class="headerlink" title="构造器间的调用规则:"></a>构造器间的调用规则:</h4><p>1.指定构造器必须调用其直接父类的”指定构造器”<br>2.便利构造器必须调用同类中的其他便利构造器(指定或者便利)<br>3.便利构造器必须最终调用一个指定构造器结束(无论指定还是便利, 最终肯定调用一个指定构造器)<br>4.指定构造器总是横向代理(父类)<br>5.便利构造器总是横向代理(子类)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">class Man2 &#123;</div><div class="line">var name:String</div><div class="line">//指定构造器</div><div class="line">init(name:String) &#123;</div><div class="line">self.name = name</div><div class="line">&#125;</div><div class="line">convenience init()&#123;</div><div class="line">self.init(name: &quot;HaRi&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan2: Man2 &#123;</div><div class="line">var age:Int</div><div class="line">//指定构造器</div><div class="line">init(age:Int) &#123;</div><div class="line">self.age = age</div><div class="line">super.init(name: &quot;xiaohange&quot;)</div><div class="line">&#125;</div><div class="line">convenience init()</div><div class="line">&#123;</div><div class="line">self.init(age: 25)</div><div class="line">&#125;</div><div class="line">convenience  init(name: String, age: Int) &#123;</div><div class="line">//调用子类构造器一定能够初始化所有属性</div><div class="line">//        self.init(age: 30)</div><div class="line">//便利构造器中只能通过self.init来初始化, 不能使用 super.init</div><div class="line">//因为调用父类构造器不一定完全初始化所有属性(子类持有)</div><div class="line">//        super.init(name: &quot;han&quot;)</div><div class="line">self.init()</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>两段式构造—-构造过程可以划分为两个阶段:<br>1.确保当前类和父类所有存储属性都被初始化;<br>2.做一些其他初始化操作.<br>好处:<br>1.可以防止属性在被初始化前访问;<br>2.可以防止属性被其他另外一个构造器意外赋值.<br>注意:<br>构造器的初始化永远是在所有类的第一阶段初始化完毕后才会开始第二阶段.</p>
+<p>编译器安全检查:<br>1.必须先初始化子类特有属性, 再向上代理父类指定构造方法初始化父类属性;<br>2.只能在调用完父类指定构造器后才能访问父类属性;<br>3.在便利构造器中, 必须先调用通类其他构造方法后才能访问属性;<br>4.第一阶段完成前不能访问父类属性, 也不能引用 self 和调用任何实例方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">class Man3 &#123;</div><div class="line">var name:String</div><div class="line">//指定构造方法</div><div class="line">init(name:String) &#123;</div><div class="line">self.name = name</div><div class="line">&#125;</div><div class="line">//便利构造方法</div><div class="line">convenience init()&#123;</div><div class="line">self.init(name: &quot;hello world&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class SuperMan3: Man3 &#123;</div><div class="line">var age:Int</div><div class="line">init(age:Int) &#123;</div><div class="line">print(&quot;SuperMan第一阶段开始&quot;)</div><div class="line">//对子类引入的属性初始化</div><div class="line">self.age = age</div><div class="line"></div><div class="line">//代码会报错, 因为调用self.name之前还没有对父类的name进行初始化</div><div class="line">//即便在这个地方修改, 也会被后面的初始化语句覆盖</div><div class="line">//        if age &gt; 30 &#123;</div><div class="line">//            self.name = &quot;hjq&quot;</div><div class="line">//        &#125;</div><div class="line">//对父类引入的属性进行初始化</div><div class="line">super.init(name: &quot;han&quot;)</div><div class="line"></div><div class="line">print(&quot;SuperMan第二阶段开始&quot;)</div><div class="line">if age &gt; 30 &#123;</div><div class="line">self.name = &quot;hello xiaohange&quot;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class MonkeyMan: SuperMan3 &#123;</div><div class="line">var height:Double</div><div class="line">init(height:Double) &#123;</div><div class="line">print(&quot;MokeyMan第一阶段开始&quot;)</div><div class="line">//对子类引入的属性初始化</div><div class="line">self.height = 100.0</div><div class="line">//对父类引入的属性进行初始化</div><div class="line">super.init(age: 40)</div><div class="line"></div><div class="line">print(&quot;MokeyMan第二阶段开始&quot;)</div><div class="line">if height &lt; 110.0 &#123;</div><div class="line">self.age = 40</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var m = MonkeyMan(height: 31)</div></pre></td></tr></table></figure>
+<h4 id="重写指定构造方法-子类的构造方法和父类的一模一样"><a href="#重写指定构造方法-子类的构造方法和父类的一模一样" class="headerlink" title="重写指定构造方法:子类的构造方法和父类的一模一样"></a>重写指定构造方法:子类的构造方法和父类的一模一样</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class Man4 &#123;</div><div class="line">var name:String</div><div class="line">init(name:String) &#123;</div><div class="line">self.name = name</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan4: Man4 &#123;</div><div class="line">var age:Int</div><div class="line">init() &#123;</div><div class="line">self.age = 25</div><div class="line">super.init(name: &quot;xiaohange&quot;)</div><div class="line">&#125;</div><div class="line"></div><div class="line">//将父类的指定构造器重写成一个便利构造器, 必须加上override关键字, 表示重写父类方法</div><div class="line">convenience override init(name: String) &#123;</div><div class="line">self.init(name: name)</div><div class="line">self.age = 50</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="便利构造方法不存在重写"><a href="#便利构造方法不存在重写" class="headerlink" title="便利构造方法不存在重写"></a>便利构造方法不存在重写</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class Man5 &#123;</div><div class="line">var name:String</div><div class="line">init(name:String) &#123;</div><div class="line">self.name = name</div><div class="line">&#125;</div><div class="line">convenience init()&#123;</div><div class="line">self.init(name:&quot;hello&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class SuperMan5: Man5 &#123;</div><div class="line">var age:Int</div><div class="line">init(age:Int) &#123;</div><div class="line">self.age = age</div><div class="line">super.init(name: &quot;hi&quot;)</div><div class="line">&#125;</div><div class="line">//1.Swift中便利构造方法不存在重写, 如果加上override关键字, 系统会去查找父类中有没有和便利构造方法一样的指定构造方法, 有旧不报错, 没有就报错</div><div class="line">//2.为什么便利构造器不能重写呢? 因为便利构造器只能横向代理, 只能调用当前类的其它构造方法或指定方法, 不可能调用super. 所以不存在重写</div><div class="line">//3.也就是说子类的便利构造方法不能直接访问父类的便利构造方法, 所以不存在重写的概念</div><div class="line">convenience init()&#123;</div><div class="line">self.init(age: 30)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">//早期版本中如果字符类中有同名便利构造器会报错, 现在则不会.</div><div class="line">var sm = SuperMan5()</div><div class="line">print(&quot;name = \(sm.name)  age = \(sm.age)&quot;)</div></pre></td></tr></table></figure>
+<h4 id="构造方法的自动继承"><a href="#构造方法的自动继承" class="headerlink" title="构造方法的自动继承"></a>构造方法的自动继承</h4><p>1.如果子类中没有定义构造器, 且子类所有的存储属性都有缺省值, 会继承父类中所有的构造方法(包括便利构造器);<br>2.如果子类中只是重写所有的指定构造器, 不管子类中的存储属性是否有缺省值, 都不会继承父类的其他构造方法;<br>3.如果子类重写了父类中的指定构造器, 不管子类中的存储属性是否有缺省值, 都会同时继承父类中的所有便利方法.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Person6 &#123;</div><div class="line">var name:String</div><div class="line">var age:Int</div><div class="line">init(name:String, age:Int) &#123;</div><div class="line">self.name = name</div><div class="line">self.age = age</div><div class="line">&#125;</div><div class="line">init(name:String) &#123;</div><div class="line">self.name = name</div><div class="line">self.age = 0</div><div class="line">&#125;</div><div class="line">convenience init()</div><div class="line">&#123;</div><div class="line">self.init(name: &quot;HaRi&quot;)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan6: Person6 &#123;</div><div class="line">var height:Double</div><div class="line">init(height:Double) &#123;</div><div class="line">self.height = height</div><div class="line">super.init(name: &quot;han&quot;, age: 25)</div><div class="line">&#125;</div><div class="line">override init(name: String, age: Int) &#123;</div><div class="line">self.height = 178.0</div><div class="line">super.init(name: name, age: age)</div><div class="line">&#125;</div><div class="line">override init(name: String) &#123;</div><div class="line">self.height = 178.0</div><div class="line">super.init(name: name)</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="必须构造器"><a href="#必须构造器" class="headerlink" title="必须构造器:"></a>必须构造器:</h4><p>只要在构造方法的前面加上一个 required 关键字, 那么所有的子类(后续子类)只要定义了构造方法都必须实现该构造方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Person7 &#123;</div><div class="line">var name:String</div><div class="line">required init(name:String)&#123;</div><div class="line">self.name = name</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">class SuperMan7: Person7 &#123;</div><div class="line">var age:Int</div><div class="line">init() &#123;</div><div class="line">self.age = 24</div><div class="line">super.init(name: &quot;hjq&quot;)</div><div class="line">&#125;</div><div class="line">required init(name: String) &#123;</div><div class="line">self.age = 24</div><div class="line">super.init(name: name)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">var sm7 = SuperMan7(name: &quot;hjq&quot;)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持技术分享与创作，您的支持将鼓励我继续创作分享！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/uploads/images/favicon.png" alt="那仅有的执着 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/uploads/images/carsales.png" alt="那仅有的执着 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-Swift/" rel="tag"># iOS Swift</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/29/Swift3基础语法--构造方法1/" rel="next" title="Swift3基础语法--构造方法1">
+                <i class="fa fa-chevron-left"></i> Swift3基础语法--构造方法1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/29/Swift3基础语法--析构方法/" rel="prev" title="Swift3基础语法--析构方法">
+                Swift3基础语法--析构方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="那仅有的执着" />
+          <p class="site-author-name" itemprop="name">那仅有的执着</p>
+           
+              <p class="site-description motion-element" itemprop="description">站点的描述</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        <html>
+
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#继承与构造方法-指定构造与便利构造器方法"><span class="nav-number">1.</span> <span class="nav-text">继承与构造方法: 指定构造与便利构造器方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#派生类的构造方法"><span class="nav-number">2.</span> <span class="nav-text">派生类的构造方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造器间的调用规则"><span class="nav-number">3.</span> <span class="nav-text">构造器间的调用规则:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重写指定构造方法-子类的构造方法和父类的一模一样"><span class="nav-number">4.</span> <span class="nav-text">重写指定构造方法:子类的构造方法和父类的一模一样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#便利构造方法不存在重写"><span class="nav-number">5.</span> <span class="nav-text">便利构造方法不存在重写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法的自动继承"><span class="nav-number">6.</span> <span class="nav-text">构造方法的自动继承</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#必须构造器"><span class="nav-number">7.</span> <span class="nav-text">必须构造器:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">那仅有的执着</span>
+</div>
+
+
+<div class="powered-by">
+  春遇到冬，便有了岁月，我遇到你们，便有了青春。
+</div>
+
+<div class="theme-info">
+ 
+</script>
+
+
+</div>
+
+  <div>
+  本站总点击 <span id="busuanzi_value_site_pv"></span> 次
+  |  您是第 <span id="busuanzi_value_site_uv"></span> 位访客
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+  <!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2134608"></script>
+<!-- UY END -->
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "32ba7399fd4d4ee394d365e94f33ad96",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  <!--卖萌-->
+<script type="text/javascript" src="/js/src/dytitle.js"></script>
+</body>
+</html>
+
+<!-- <script type="text/javascript" src="/js/src/particle.js"></script>
+<script type="text/javascript" src="/js/src/particle.js" count="50" zindex="-2" opacity="1" color="0,104,183"></script> -->
+<!-- 小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
