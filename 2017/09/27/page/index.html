@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://yoursite.com/uploads/images/5.png">
 <meta property="og:image" content="http://yoursite.com/uploads/images/6.png">
 <meta property="og:image" content="http://yoursite.com/uploads/images/7.png">
-<meta property="og:updated_time" content="2017-09-27T08:18:03.000Z">
+<meta property="og:updated_time" content="2017-09-28T02:06:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识私有库(组件化)">
 <meta name="twitter:description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了老大的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。 为什">
@@ -398,63 +398,67 @@
 <p>远程私有库可以将你的代码传到第三方托管平台进行公司内部开发人员共享,从而实现组件化开发模式</p>
 <h4 id="私有库应该放在什么地方呢"><a href="#私有库应该放在什么地方呢" class="headerlink" title="私有库应该放在什么地方呢?"></a>私有库应该放在什么地方呢?</h4><p>本地私有库放在本地(电脑上的某个文件夹),而远程私有库需要放在第三方托管平台(如:github,码云,码市)</p>
 <h3 id="创建远程私有库"><a href="#创建远程私有库" class="headerlink" title="创建远程私有库"></a>创建远程私有库</h3><h5 id="先如果需要在第三方的托管平台创建一个私有的库-可以在免费的-码云"><a href="#先如果需要在第三方的托管平台创建一个私有的库-可以在免费的-码云" class="headerlink" title="先如果需要在第三方的托管平台创建一个私有的库(可以在免费的 码云 )"></a>先如果需要在第三方的托管平台创建一个私有的库(可以在免费的 码云 )</h5><blockquote>
-<p>创建私有索引库</p>
+<p>创建私有远程索引库,什么是远程索引库？</p>
 </blockquote>
+<ul>
+<li>每创建一个组件都会带有一个 xxx.podspec 的索引文件。专门用来存放这些索引文件的库就叫做索引库。我们需要将这些索引文件上传到远程索引库才能保证其他的同事能够拿来用。</li>
+</ul>
 <p><img src="/uploads/images/1.png" alt="笔记"></p>
 <blockquote>
-<p>添加repo索引库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod repo add WlwPodspecs xxxx(你刚创建的仓库地址,在项目的[克隆\下载]按钮处可以查看)</div></pre></td></tr></table></figure></p>
+<p>添加远程索引库大本地add到本地索引库，这样就可以和远程索引库关联<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod repo add WlwPodspecs（本地索引库的名字） xxxx(你刚创建的远程索引库仓库地址,在项目的[克隆\下载]按钮处可以查看)（注：本地索引库的名字建议和远程索引库起的名字一样）(可以前往个人 .cocoapods文件夹中查看add到本地的远程索引库)</div></pre></td></tr></table></figure></p>
 <p>部署公钥管理拿到权限就可以add到本地的仓库了<br>这里如果发生错误，说明电脑没有配置公钥和私钥（前往个人中的.ssh文件夹中查看.pub，在码云的项目中–管理-部署公钥管理中添加）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">执行上面的命令成功以后 执行 pod repo 来查看本地所有的仓库，发现有自己刚才创建的仓库就成功了</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p><img src="/uploads/images/2.png" alt="笔记"></p>
-<h5 id="再次在码云上创建一个私有的仓库，作为模版"><a href="#再次在码云上创建一个私有的仓库，作为模版" class="headerlink" title="再次在码云上创建一个私有的仓库，作为模版"></a>再次在码云上创建一个私有的仓库，作为模版</h5><blockquote>
+<h5 id="再次在码云上创建一个私有的仓库作为‘索引库’，作为模版"><a href="#再次在码云上创建一个私有的仓库作为‘索引库’，作为模版" class="headerlink" title="再次在码云上创建一个私有的仓库作为‘索引库’，作为模版"></a>再次在码云上创建一个私有的仓库作为‘索引库’，作为模版</h5><blockquote>
 <ol>
-<li>通过命令行的方法创建模版库，然后再和远程库关联</li>
+<li>通过命令行的方法创建‘索引库’，然后再向远程索引库上传</li>
 </ol>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Pod lib create 私有库名称</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Pod lib create 索引库名称</div></pre></td></tr></table></figure>
 <p><img src="/uploads/images/3.png" alt="笔记"></p>
 <blockquote>
-<p>3.找到无论是clone还命令创建的模版库文件夹，编辑（模版库.podspec）的配置文件</p>
+<p>3.找到无论是clone还命令创建的索引库文件夹，编辑（索引库.podspec）的配置文件</p>
 </blockquote>
 <ul>
-<li>s.homepage 需要设置刚创建的私有代码仓库的地址, 不是私有索引库的地址</li>
-<li>s.source       需要设置的是私有代码仓库的源地址(选择使用HTTPS地址)</li>
+<li>s.homepage 你个人页面的地址，不是某一个库的地址</li>
+<li>s.source       需要设置的是‘索引库’的源地址(选择使用HTTPS地址，可在项目中查看)</li>
 <li>s.version      每次编辑后提交到远程库都需要提交tag版本，提交的tag值要和这里的值保持一致</li>
 </ul>
 <p><img src="/uploads/images/4.png" alt="笔记"></p>
 <blockquote>
-<p>4.修改模版库Class文件夹</p>
+<p>4.修改‘索引库’Class文件夹</p>
 </blockquote>
 <ul>
-<li>把公共的文件放入模版库中的Class文件夹中，就可以上传了</li>
+<li>把公共的文件放入‘索引库’中的Class文件夹中，就可以上传了</li>
 </ul>
 <p><img src="/uploads/images/8.png" alt="笔记"></p>
 <blockquote>
-<p>5.配置完之后就可以提交到你远程的私有库了 第一次要进行关联!!</p>
+<p>4.1放入Class文件夹中后，如果想验证一下，可以在‘索引库’文件夹中的Example测试工程中验证，pod install以后就可以打开测试工程使用看看了。</p>
+<p>5.配置完之后就可以提交到你远程私有库中了 第一次要进行和远程私有库的关联!!</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">pod stauts</div><div class="line">pod add -A</div><div class="line">pod commit -m &apos;xxx&apos;</div><div class="line">//添加关联</div><div class="line">git remote add origin 你那个Base库的地址</div><div class="line">//提交</div><div class="line">git push origin master</div><div class="line">如果第一次提交还会要求你验证账号和密码(输入的时候不会显示输入字符，敲完直接回车就可以)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">pod stauts</div><div class="line">pod add -A</div><div class="line">pod commit -m &apos;xxx&apos;</div><div class="line">//添加关联</div><div class="line">git remote add origin 你那个远程私有库的地址</div><div class="line">//提交</div><div class="line">git push origin master</div><div class="line">如果第一次提交还会要求你验证账号和密码(输入的时候不会显示输入字符，敲完直接回车就可以)</div></pre></td></tr></table></figure>
 <p>第一次提交可能先pull一下，直接pull可以pull不下来，需要在后面加上 –allow-unrelated-histories</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">现在就开始绑定tag了</div><div class="line">可以通过git tag 查看tag</div><div class="line">git tag &apos;0.1.0&apos;(注意：这里和模版库.podspec配置文件的s.version最后保持一致)</div><div class="line">git push --tags</div><div class="line">提交完之后  可以用下面的命令行验证</div><div class="line">pod spec lint 验证远程</div><div class="line">pod lib lint 验证本地</div></pre></td></tr></table></figure>
 <blockquote>
-<p>6.这里提交完以后最好需要验证一下，保证正确后，就可以放心的推到远程库了</p>
+<p>6.这里提交完以后最好需要验证一下，保证正确后，就可以放心的推到远程私有库了</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pod spec lint (提交以后，验证远程)</div><div class="line">pod lib lint  (验证本地)</div><div class="line">一些不痛不痒的warning，也可以加 --alown-warning 忽略</div></pre></td></tr></table></figure>
 <p><img src="/uploads/images/5.png" alt="笔记"></p>
 <blockquote>
 <p>7.验证通过以后，就可以就可以推送到第一次创建的私有库中了</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">执行 pod repo push xxxxx(第一次创建的库的名字，已经pod repo到本地仓库) xxxxx.podspec(模版库的名字)，查看私有库索引项目</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">执行 pod repo push xxxxx(第一次创建的库的名字，已经pod repo到本地仓库) xxxxx.podspec(‘索引库’的名字)，查看远程私有库索引项目</div></pre></td></tr></table></figure>
 <p><img src="/uploads/images/6.png" alt="笔记"></p>
 <blockquote>
 <p>8.打开你的主工程 然后来到podfile文件进行配置</p>
 </blockquote>
 <p><img src="/uploads/images/7.png" alt="笔记"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod install 或者 pod update 就可以看到自己的私有库了</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod install 或 pod update 就可以看到自己的私有库了</div></pre></td></tr></table></figure>
 <blockquote>
 <p>9.关于升级和维护远程私有库</p>
 </blockquote>
 <ul>
-<li>每次修改后保存，修改对应的s.version,使用git命令提交对应的tag就可以，就可以在私有库中看到多版本的tag。</li>
+<li>每次修改后保存，修改对应的s.version,使用git命令提交对应的tag就可以，就可以在远程私有库中看到多版本的tag。</li>
 </ul>
 
       
@@ -659,7 +663,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#闲谈"><span class="nav-number">1.</span> <span class="nav-text">闲谈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要学习私有库"><span class="nav-number">2.</span> <span class="nav-text">为什么要学习私有库?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是本地私有库-什么是远程私有库呢"><span class="nav-number">3.</span> <span class="nav-text">什么是本地私有库?什么是远程私有库呢?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么是私有库"><span class="nav-number">4.</span> <span class="nav-text">为什么是私有库?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地私有库和远程私有库的区别是什么"><span class="nav-number">5.</span> <span class="nav-text">本地私有库和远程私有库的区别是什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私有库应该放在什么地方呢"><span class="nav-number">6.</span> <span class="nav-text">私有库应该放在什么地方呢?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建远程私有库"><span class="nav-number"></span> <span class="nav-text">创建远程私有库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#先如果需要在第三方的托管平台创建一个私有的库-可以在免费的-码云"><span class="nav-number">0.1.</span> <span class="nav-text">先如果需要在第三方的托管平台创建一个私有的库(可以在免费的 码云 )</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#再次在码云上创建一个私有的仓库，作为模版"><span class="nav-number">0.2.</span> <span class="nav-text">再次在码云上创建一个私有的仓库，作为模版</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#闲谈"><span class="nav-number">1.</span> <span class="nav-text">闲谈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要学习私有库"><span class="nav-number">2.</span> <span class="nav-text">为什么要学习私有库?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是本地私有库-什么是远程私有库呢"><span class="nav-number">3.</span> <span class="nav-text">什么是本地私有库?什么是远程私有库呢?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么是私有库"><span class="nav-number">4.</span> <span class="nav-text">为什么是私有库?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地私有库和远程私有库的区别是什么"><span class="nav-number">5.</span> <span class="nav-text">本地私有库和远程私有库的区别是什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私有库应该放在什么地方呢"><span class="nav-number">6.</span> <span class="nav-text">私有库应该放在什么地方呢?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建远程私有库"><span class="nav-number"></span> <span class="nav-text">创建远程私有库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#先如果需要在第三方的托管平台创建一个私有的库-可以在免费的-码云"><span class="nav-number">0.1.</span> <span class="nav-text">先如果需要在第三方的托管平台创建一个私有的库(可以在免费的 码云 )</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#再次在码云上创建一个私有的仓库作为‘索引库’，作为模版"><span class="nav-number">0.2.</span> <span class="nav-text">再次在码云上创建一个私有的仓库作为‘索引库’，作为模版</span></a></li></ol></li></ol></div>
             
 
           </div>
