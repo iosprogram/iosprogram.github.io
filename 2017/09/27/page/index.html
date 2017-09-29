@@ -86,13 +86,13 @@
 
 
 
-<meta name="description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了老大的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。 为什">
+<meta name="description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了项目经理的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。">
 <meta name="keywords" content="私有库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识私有库(组件化)">
 <meta property="og:url" content="http://yoursite.com/2017/09/27/page/index.html">
 <meta property="og:site_name" content="奥创的博客">
-<meta property="og:description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了老大的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。 为什">
+<meta property="og:description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了项目经理的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。">
 <meta property="og:image" content="http://yoursite.com/uploads/images/1.png">
 <meta property="og:image" content="http://yoursite.com/uploads/images/2.png">
 <meta property="og:image" content="http://yoursite.com/uploads/images/3.png">
@@ -101,10 +101,10 @@
 <meta property="og:image" content="http://yoursite.com/uploads/images/5.png">
 <meta property="og:image" content="http://yoursite.com/uploads/images/6.png">
 <meta property="og:image" content="http://yoursite.com/uploads/images/7.png">
-<meta property="og:updated_time" content="2017-09-28T02:25:38.000Z">
+<meta property="og:updated_time" content="2017-09-29T09:06:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识私有库(组件化)">
-<meta name="twitter:description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了老大的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。 为什">
+<meta name="twitter:description" content="闲谈早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了项目经理的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。">
 <meta name="twitter:image" content="http://yoursite.com/uploads/images/1.png">
 
 
@@ -390,7 +390,7 @@
       
 
       
-        <h4 id="闲谈"><a href="#闲谈" class="headerlink" title="闲谈"></a>闲谈</h4><p>早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了老大的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。</p>
+        <h4 id="闲谈"><a href="#闲谈" class="headerlink" title="闲谈"></a>闲谈</h4><p>早在前段时间就看到了关于蘑菇街、淘宝、滴滴等公司的组件化架构方案，看过很多篇介绍的文章，一直非常的向往。刚好，最近项目一个大的迭代刚刚上线，乘着下一次需求还没有开始，也响应了项目经理的号召，我们开始了私有库、组件化的道路实践，虽然网上有很多很多的关于私有库、组件话的文章和资源，但是，还是想把自己的一些微薄的实践经历记录下来，一方面方便自己以后复习查阅，另一方面也希望帮助更多的朋友^ _ ^。</p>
 <h4 id="为什么要学习私有库"><a href="#为什么要学习私有库" class="headerlink" title="为什么要学习私有库?"></a>为什么要学习私有库?</h4><p>因为随着项目代码的体积不断增加,为了更好的管理项目，我们需要借助CocoaPods版本管理工具对原有项目进行拆分,然后创建对应的私有库进行保存</p>
 <h4 id="什么是本地私有库-什么是远程私有库呢"><a href="#什么是本地私有库-什么是远程私有库呢" class="headerlink" title="什么是本地私有库?什么是远程私有库呢?"></a>什么是本地私有库?什么是远程私有库呢?</h4><p>举个例子: 本地私有库就是你将钱(代码),放在身上(放在当前电脑中某个文件夹), 而远程私有库呢,就是你将钱放在第三方平台(支付宝,银行)之类的</p>
 <h4 id="为什么是私有库"><a href="#为什么是私有库" class="headerlink" title="为什么是私有库?"></a>为什么是私有库?</h4><p>私有的意思是只有相对应权限的人才能访问,因为项目是公司的根本,正常人都不会选择开源公司的项目,只会开源对应的框架</p>
@@ -462,12 +462,12 @@
 </ul>
 <blockquote>
 <p>10.更多，请参考:</p>
+</blockquote>
 <ol>
 <li><a href="http://www.jianshu.com/p/0b6299f80bbd" target="_blank" rel="external">iOS-本地私有库和远程私有库.其实并不难</a></li>
 <li><a href="http://blog.csdn.net/uxyheaven/article/details/50957462" target="_blank" rel="external">iOS CocoaPods 私有库 steps and tips</a></li>
 <li><a href="http://www.jianshu.com/p/760d6cd46719" target="_blank" rel="external">iOS组件化</a></li>
 </ol>
-</blockquote>
 
       
     </div>
